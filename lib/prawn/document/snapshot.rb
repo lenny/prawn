@@ -49,7 +49,7 @@ module Prawn
         # current_page holds a ref to the Pages dictionary which grows
         # monotonically as data is added to the document, so we share that
         # between the old and new copies.
-        {:page_content    => state.page.content.deep_copy,
+        {:page_content    => state.page.content.respond_to?(:deep_copy) ?  state.page.content.deep_copy :  state.page.content.clone,
          :current_page    => state.page.dictionary.deep_copy(share=[:Parent]),
          :page_number     => page_number,
          :page_kids       => state.store.pages.data[:Kids].map{|kid| kid.identifier},
